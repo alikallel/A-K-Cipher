@@ -1,6 +1,7 @@
 from utils import display_banner
 from encrypt import encrypt_message
 from decrypt import decrypt_message
+from factorize import factorize
 import sys
 
 def print_menu():
@@ -8,7 +9,8 @@ def print_menu():
     print("----------------------")
     print("1. Encryption")
     print("2. Decryption")
-    print("3. Exit")
+    print("3. Factorization (Find p and q)")
+    print("4. Exit")
     print("----------------------")
 
 def main():
@@ -16,7 +18,7 @@ def main():
     
     while True:
         print_menu()
-        choice = input("Enter your choice (1-3): ")
+        choice = input("Enter your choice (1-4): ")
         
         if choice == "1":
             print("\nRSA Encryption Tool")
@@ -29,11 +31,20 @@ def main():
             decrypt_message()
         
         elif choice == "3":
+            print("\nRSA Factorization Tool")
+            print("---------------------")
+            try:
+                n = int(input("Enter the RSA modulus (n): "))
+                factorize(n)
+            except ValueError:
+                print("Invalid input. Please enter a valid integer.")
+        
+        elif choice == "4":
             print("\nThank you for using A-K Cipher Tool!")
             sys.exit(0)
         
         else:
-            print("\nInvalid choice. Please select 1, 2, or 3.")
+            print("\nInvalid choice. Please select 1, 2, 3, or 4.")
         
         input("\nPress Enter to continue...")
 

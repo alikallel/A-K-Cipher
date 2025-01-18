@@ -1,5 +1,4 @@
 from Crypto.Util.number import inverse, long_to_bytes
-from utils import display_banner
 
 def rsa_decrypt_normal(ciphertext, n, e, p, q):
     """Decrypt a ciphertext using RSA with p and q."""
@@ -8,7 +7,7 @@ def rsa_decrypt_normal(ciphertext, n, e, p, q):
     plaintext_long = pow(ciphertext, d, n)
     return plaintext_long
 
-def rsa_decrypt_signle_prime(ciphertext, n, e):
+def rsa_decrypt_single_prime(ciphertext, n, e):
     """Decrypt a ciphertext using RSA when p = n."""
     q = 1
     phi = (n - 1)
@@ -19,16 +18,25 @@ def rsa_decrypt_signle_prime(ciphertext, n, e):
 def decrypt_message():
     try:
         ciphertext = int(input("Enter the ciphertext to decrypt: "))
-        n = int(input("Enter the modulus (n): "))
         e = int(input("Enter the public exponent (e): "))
-        p = int(input("Enter the first prime factor (p):  "))
+        p = int(input("Enter the first prime factor (p): "))
+
+        q = None
+        n = input("Enter the modulus (n) [leave empty if providing both p and q]: ").strip()
+        if not n:
+            # If n is not provided, prompt for q
+            q = int(input("Enter the second prime factor (q): "))
+            n = p * q
+        else:
+            n = int(n)
         
         if p == n:
             # Special case: p = n
-            plaintext_long = rsa_decrypt_signle_prime(ciphertext, n, e)
+            plaintext_long = rsa_decrypt_single_prime(ciphertext, n, e)
         else:
             # Normal case: need both p and q
-            q = int(input("Enter the second prime factor (q): "))
+            if not q:
+                q = int(input("Enter the second prime factor (q): "))
             plaintext_long = rsa_decrypt_normal(ciphertext, n, e, p, q)
         
         plaintext = long_to_bytes(plaintext_long)
