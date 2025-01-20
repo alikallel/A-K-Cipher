@@ -1,5 +1,5 @@
 from pwn import xor
-from utils import display_banner
+from utils.utils import display_banner
 
 def xor_encrypt_normal(message, key, flag_format=None):
     """Encrypt a message using XOR with the given key."""

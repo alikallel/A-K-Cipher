@@ -1,5 +1,5 @@
 from Crypto.Util.number import bytes_to_long
-from utils import display_banner
+from utils.utils import display_banner
 
 def rsa_encrypt_normal(message, n, e, flag_format=None):
     """Encrypt a message using RSA with normal encryption."""

@@ -1,5 +1,5 @@
 from pwn import xor
-from utils import display_banner
+from utils.utils import display_banner
 
 def xor_decrypt_normal(ciphertext, key):
     """Decrypt a message using XOR with the given key."""
