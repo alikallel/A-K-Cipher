@@ -5,6 +5,7 @@ from XOR.encrypt import encrypt_message as xor_encrypt
 from XOR.decrypt import decrypt_message as xor_decrypt
 from Caesar.encrypt import encrypt_message as caesar_encrypt
 from Caesar.decrypt import decrypt_message as caesar_decrypt
+from DiffieHellman.dh_analysis import run_dh_analysis
 from RSA.factorize import factorize
 import sys
 
@@ -18,7 +19,8 @@ def print_menu():
     print("5. XOR Decryption")
     print("6. Caesar Cipher Encryption")
     print("7. Caesar Cipher Decryption")
-    print("8. Exit")
+    print("8. Diffie-Hellman Analysis")
+    print("9. Exit")
     print("---------------")
 
 def main():
@@ -26,7 +28,7 @@ def main():
     
     while True:
         print_menu()
-        choice = input("Enter your choice (1-8): ")
+        choice = input("Enter your choice (1-9): ")
         
         if choice == "1":
             print("\nRSA Encryption Tool")
@@ -68,11 +70,17 @@ def main():
             caesar_decrypt()
         
         elif choice == "8":
+            print("\nDiffie-Hellman Key Analysis")
+            print("-------------------------")
+            run_dh_analysis()
+        
+        elif choice == "9":
             print("\nThank you for using A-K Cipher Tool!")
             sys.exit(0)
-        
+            print("--------------------")
+            
         else:
-            print("\nInvalid choice. Please select 1-8.")
+            print("\nInvalid choice. Please select 1-10.")
         
         input("\nPress Enter to continue...")
 
