@@ -7,6 +7,7 @@ from Caesar.encrypt import encrypt_message as caesar_encrypt
 from Caesar.decrypt import decrypt_message as caesar_decrypt
 from DiffieHellman.dh_analysis import run_dh_analysis
 from RSA.factorize import factorize
+from AES.aes128 import aes
 import sys
 
 def print_menu():
@@ -20,7 +21,8 @@ def print_menu():
     print("6. Caesar Cipher Encryption")
     print("7. Caesar Cipher Decryption")
     print("8. Diffie-Hellman Analysis")
-    print("9. Exit")
+    print("9. AES")
+    print("10. Exit")
     print("---------------")
 
 def main():
@@ -75,6 +77,10 @@ def main():
             run_dh_analysis()
         
         elif choice == "9":
+            print("\nThank you for using A-K Cipher Tool!")
+            print("--------------------")
+            aes()
+        elif choice == "10":
             print("\nThank you for using A-K Cipher Tool!")
             sys.exit(0)
             print("--------------------")
