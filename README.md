@@ -6,8 +6,15 @@ A centralized cryptographic toolkit designed for Capture The Flag (CTF) challeng
 
 ### RSA Operations:
 - **Encryption**: Encrypt messages using the RSA algorithm.
-- **Decryption**: Decrypt messages using the private key or by applying factorization techniques.
-- **Factorization**: Use various methods, including Fermat’s factorization, to factorize the RSA modulus (`n`).
+- **Decryption**: Multiple decryption methods including: Known prime factors (p, q), Known private exponent (d), Common modulus attack.
+- **Factorization**: Use various methods, including Fermat’s factorization.
+
+### AES Operations:
+- **Supported Modes**: Electronic Codebook (ECB), Cipher Block Chaining (CBC).
+- **Features**: 16-byte key requirement, Support encryption and decryption
+
+### Diffie-Hellman
+- **Features**: Modular exponentiation calculator, Shared secret computation, Message decryption, Support for AES-CBC encrypted messages.
 
 ### XOR Cipher:
 - **Encryption**: Encrypt messages using the XOR cipher with a custom key, with support for flag formatting (e.g., `CTF{message}`).
@@ -17,11 +24,15 @@ A centralized cryptographic toolkit designed for Capture The Flag (CTF) challeng
 - **Encryption**: Encrypt messages using the Caesar cipher with a specified shift value (1-25).
 - **Decryption**: Decrypt messages using a known shift value or brute-force all possible shifts to recover the original message.
 
+### Additional Features: 
+- FactorDB integration
+
 ## Requirements
 
 - Python 3.x
 - Required Python libraries:
   - `pwn`
   - `pycryptodome`
+  - `hashlib`
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
