@@ -40,7 +40,6 @@ The A-K Cipher Tool is a cryptographic toolkit designed for Capture The Flag (CT
 - **Lattice Reduction**: Perform Gaussian reduction on lattice vectors.
 - **Legendre Symbol**: Compute the Legendre symbol.
 - **Number Theory Transformations**: Binary to decimal, decimal to binary, and modular exponentiation.
-- **Tonelli-Shanks Algorithm**: Compute modular square roots using the Tonelli-Shanks algorithm.
 
 ### Additional Features: 
 - FactorDB integration
