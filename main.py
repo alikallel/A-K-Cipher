@@ -28,8 +28,9 @@ def main():
                 "Mathematics",
             ],
         )
+        print("9. Graphical User Interface (GUI)")
 
-        choice = input("Enter your choice (0-7): ")
+        choice = input("Enter your choice (0-8, or 9 for GUI): ")
 
         if choice == "1":
             rsa_menu()
@@ -47,11 +48,21 @@ def main():
             rot()
         elif choice == "8":
             MathChallengeSolver().mathematics()
+        elif choice == "9":
+            try:
+                from gui.app import main as gui_main
+                print("Launching GUI interface...")
+                gui_main()
+            except ImportError as e:
+                print(f"Error: Could not import GUI module: {e}")
+                print("Make sure you have tkinter installed and the gui module is available.")
+            except Exception as e:
+                print(f"Error launching GUI: {e}")
         elif choice == "0":
             print("\nThank you for using A-K Cipher Tool! Goodbye!")
             sys.exit(0)
         else:
-            print("\nInvalid choice. Please select 0-7.")
+            print("\nInvalid choice. Please select 0-7 or 9.")
 
         input("\nPress Enter to continue...")
 

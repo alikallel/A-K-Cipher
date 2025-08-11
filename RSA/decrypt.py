@@ -10,8 +10,18 @@ class RSACracker:
         if self.verbose:
             print(msg)
 
-    def factorize_fermat(self, n: int) :
-      
+    def _print_result(self, numeric_result: int, label: str = "Decrypted result"):
+        """Print both numeric and bytes representation of the result"""
+        print(f"\n{label} (numeric): {numeric_result}")
+        try:
+            bytes_result = long_to_bytes(numeric_result)
+            print(f"{label} (bytes): {bytes_result}")
+            return bytes_result
+        except Exception as e:
+            print(f"{label} (bytes): Failed to convert to bytes - {e}")
+            return None
+
+    def factorize_fermat(self, n: int):
         self._print("Attempting Fermat factorization...")
         a = isqrt(n)
         b2 = a*a - n
@@ -29,8 +39,7 @@ class RSACracker:
                 return p, q
         return None
 
-    def common_modulus_attack(self, c1: int, c2: int, e1: int, e2: int, n: int) -> Optional[bytes]:
-        
+    def common_modulus_attack(self, c1: int, c2: int, e1: int, e2: int, n: int) -> Optional[int]:
         self._print("Attempting common modulus attack...")
         
         # Calculate coefficients using extended GCD
@@ -60,41 +69,35 @@ class RSACracker:
         # Calculate message using Chinese Remainder Theorem
         m = (pow(c1, a, n) * pow(c2, b, n)) % n
         
-        try:
-            return long_to_bytes(m)
-        except Exception:
-            self._print("Failed to convert result to bytes")
-            return None
+        return m
 
-
-    def wiener_attack(self, e: int, n: int) :
+    def wiener_attack(self, e: int, n: int):
         """
         Wiener's attack for small private exponent.
         Works when d < (1/3) * N^(1/4)
         """
-        
         return None
 
     def decrypt_message(self, ciphertext: int, n: int, e: int, p: Optional[int] = None,
-                        q: Optional[int] = None, d: Optional[int] = None) -> Optional[bytes]:
+                        q: Optional[int] = None, d: Optional[int] = None) -> Optional[int]:
         
         try:
-            if p==n :
+            if p == n:
                 q = 1
                 phi = (n - 1)
                 d = pow(e, -1, phi)
                 plaintext_long = pow(ciphertext, d, n)
-                return long_to_bytes(plaintext_long)
+                return plaintext_long
 
             if p and q:
                 phi = (p - 1) * (q - 1)
                 d = inverse(e, phi)
                 plaintext = pow(ciphertext, d, n)
-                return long_to_bytes(plaintext)
+                return plaintext
 
             if d:
                 plaintext = pow(ciphertext, d, n)
-                return long_to_bytes(plaintext)
+                return plaintext
 
             factors = self.factorize_fermat(n)
             if factors:
@@ -124,7 +127,7 @@ def decrypt_message():
             if (p != n):
                 q = input("Enter the second prime factor (q) if known [press Enter to skip]: ").strip()
             else:
-                q= None
+                q = None
 
             p = int(p) if p else None
             q = int(q) if q else None
@@ -141,8 +144,8 @@ def decrypt_message():
                 return
 
             result = cracker.decrypt_message(ciphertext, n, e, p, q)
-            if result:
-                print(f"\nDecrypted plaintext: {result}")
+            if result is not None:
+                cracker._print_result(result, "Decrypted plaintext")
             else:
                 print("\nDecryption failed. Try with different parameters or attack methods.")
 
@@ -154,8 +157,8 @@ def decrypt_message():
             n = int(input("Enter the modulus (n): "))
 
             result = cracker.common_modulus_attack(c1, c2, e1, e2, n)
-            if result:
-                print(f"\nDecrypted plaintext: {result}")
+            if result is not None:
+                cracker._print_result(result, "Decrypted plaintext")
             else:
                 print("\nCommon Modulus Attack failed. Ensure inputs are correct and gcd(e1, e2) = 1.")
 
@@ -166,3 +169,6 @@ def decrypt_message():
         print(f"Invalid input: {ve}")
     except Exception as error:
         print(f"Error: {error}")
+
+if __name__ == "__main__":
+    decrypt_message()

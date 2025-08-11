@@ -51,7 +51,6 @@ The A-K Cipher Tool is a cryptographic toolkit designed for Capture The Flag (CT
 - Required Python libraries:
   - `pwn`
   - `pycryptodome`
-  - `hashlib`
   - `sympy`
   - `numpy`
   - `requests`
