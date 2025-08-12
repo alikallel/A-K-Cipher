@@ -12,7 +12,10 @@ def factorize(n):
             print("\nFactors Found:")
             for factor, count in factors:
                 print(f"Factor: {factor}, Count: {count}")
+            return factors, None
         else:
             print("Unable to find factors for the given number.")
+            return None, "Unable to find factors for the given number."
     except requests.RequestException as e:
         print(f"Error querying FactorDB: {e}")
+        return None, f"Error querying FactorDB: {e}"

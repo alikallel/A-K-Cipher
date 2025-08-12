@@ -268,11 +268,27 @@ class RSAModule(BaseGUIModule):
             except ValueError:
                 self.show_error("n must be an integer")
                 return
-
-            # simple FactorDB printout; we show result in the output area
-            # since factorize() prints to stdout, we will just inform the user
-            factorize(n)
-            self.update_output(self.factor_output, "Requested factorization. See console for FactorDB output.")
+                
+            # Show initial message
+            self.update_output(self.factor_output, f"Factoring {n}...")
+            self.factor_output.update()  # Force GUI update
+            
+            # Call factorize
+            factors, error = factorize(n)
+            
+            # Prepare result with the original message
+            result_lines = [f"Factoring {n}...", ""]  # Add empty line for spacing
+            
+            if error:
+                result_lines.append(error)
+            elif factors:
+                result_lines.append("Factors found:")
+                for factor, count in factors:
+                    result_lines.append(f"Factor: {factor}, Count: {count}")
+            else:
+                result_lines.append("No factors found.")
+                
+            self.update_output(self.factor_output, "\n".join(result_lines))
         except Exception as ex:
             self.show_error(f"Factorization failed: {ex}")
 
